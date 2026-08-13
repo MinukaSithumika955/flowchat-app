@@ -1,38 +1,46 @@
-from flask import Flask, render_template, request, session, redirect, send_from_directory
-from flask_socketio import SocketIO, send, join_room
+from flask import Flask, render_template, request, session, redirect, url_for
+from flask_socketio import SocketIO, emit, join_room, leave_room
 import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'flowchat_secret_123'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'randomsecretkey123')
+
+# SocketIO - gevent use karan nisa async_mode eka auto detect wenawa
 socketio = SocketIO(app, cors_allowed_origins="*")
 
+# Room walata users store karanna
+rooms = {}
+
 @app.route('/')
-def home():
-    return render_template('home.html')
+def index():
+    return render_template('index.html')
 
-@app.route('/chat')
-def chat():
-    name = request.args.get('name')
-    room = request.args.get('room')
-    if not name or not room: 
-        return redirect('/')
-    session['name'] = name
-    session['room'] = room
-    return render_template('chat.html', name=name, room=room)
-
-@app.route('/manifest.json')
-def manifest():
-    return send_from_directory('static', 'manifest.json')
+@app.route('/room/<room_id>')
+def room(room_id):
+    return render_template('room.html', room_id=room_id)
 
 @socketio.on('join')
 def on_join(data):
-    join_room(data['room'])
-    send({'name': 'System', 'msg': f"{data['name']} joined FlowCHAT"}, to=data['room'])
+    room = data['room']
+    join_room(room)
+    if room not in rooms:
+        rooms[room] = []
+    rooms[room].append(request.sid)
+    emit('message', {'msg': 'User joined'}, room=room)
+
+@socketio.on('leave')
+def on_leave(data):
+    room = data['room']
+    leave_room(room)
+    if room in rooms and request.sid in rooms[room]:
+        rooms[room].remove(request.sid)
+    emit('message', {'msg': 'User left'}, room=room)
 
 @socketio.on('message')
 def handle_message(data):
-    send({'name': session.get('name'), 'msg': data['msg']}, to=session.get('room'))
+    room = data['room']
+    emit('message', data, room=room)
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 10000))
     socketio.run(app, host='0.0.0.0', port=port)
