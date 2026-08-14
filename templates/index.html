@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <title>FlowChat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial; background:#111; color:#fff; text-align:center; padding:50px; }
+    input, button { padding:10px; margin:5px; border-radius:8px; border:none; }
+    button { background:#4CAF50; color:white; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h1>🔥 FlowChat</h1>
+  <p>Room ekata name ekak danna</p>
+  <input id="room" placeholder="Room Name">
+  <button onclick="join()">Join</button>
+
+  <script>
+    function join() {
+      let room = document.getElementById('room').value;
+      if(room) window.location.href = '/room/' + room;
+    }
+  </script>
+</body>
+</html>
