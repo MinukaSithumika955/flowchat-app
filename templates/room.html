@@ -86,7 +86,7 @@
   <script>
     const socket = io();
     const room = "{{ room }}";
-    const username = "You"; 
+    const username = "{{ username }}";
 
     socket.emit('join', {room: room});
 
