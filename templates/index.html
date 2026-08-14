@@ -1,19 +1,65 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <title>FlowChat</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlowChat - Join Room</title>
   <style>
-    body { font-family: Arial; background:#111; color:#fff; text-align:center; padding:50px; }
-    input, button { padding:10px; margin:5px; border-radius:8px; border:none; }
-    button { background:#4CAF50; color:white; cursor:pointer; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 8px 32px rgba(0,0,0.3);
+    }
+    .logo { font-size: 50px; margin-bottom: 10px; }
+    h1 { font-size: 28px; margin-bottom: 8px; }
+    p { opacity: 0.8; margin-bottom: 30px; }
+    .input-group { display: flex; gap: 10px; }
+    input {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+    button {
+      padding: 15px 25px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover { background: #45a049; transform: scale(1.05); }
   </style>
 </head>
 <body>
-  <h1>🔥 FlowChat</h1>
-  <p>Room ekata name ekak danna</p>
-  <input id="room" placeholder="Room Name">
-  <button onclick="join()">Join</button>
+  <div class="container">
+    <div class="logo">🔥</div>
+    <h1>FlowChat</h1>
+    <p>Room ekata name ekak danna</p>
+    <div class="input-group">
+      <input id="room" placeholder="Ex: friends-room">
+      <button onclick="join()">Join</button>
+    </div>
+  </div>
 
   <script>
     function join() {
