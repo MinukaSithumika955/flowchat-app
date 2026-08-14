@@ -1,9 +1,29 @@
-<!DOCTYPE html><html><head><title>FlowCHAT</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>body{background:#0a0f1a; color:#fff; font-family:Arial; display:flex; justify-content:center; align-items:center; height:100vh}
-.box{padding:30px; border:2px solid #25D366; border-radius:15px; text-align:center; width:320px}
-h1{color:#25D366; font-size:32px; margin-bottom:10px}
-input{padding:12px; width:90%; border-radius:8px; border:none; margin:10px 0; background:#1f2c33; color:#fff}
-button{padding:12px 25px; background:#25D366; color:#000; border:none; border-radius:8px; font-weight:bold; cursor:pointer; font-size:16px}</style></head>
-<body><div class="box"><h1>FlowCHAT</h1><p style="color:#8696a0">Talk. Instant. Free.</p>
-<form action="/chat"><input name="name" placeholder="Your Name" required>
-<input name="room" placeholder="Room ID: ex: bro123" required><button type="submit">Join FlowCHAT</button></form></div></body></html>
+<!doctype html>
+<html>
+<head>
+  <title>Room: {{ room }}</title>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body style="background:#111;color:#fff;text-align:center;padding:20px;">
+  <h2>Room: {{ room }}</h2>
+  <div id="messages" style="height:300px;overflow-y:scroll;border:1px solid #444;padding:10px;"></div>
+  <input id="msg" placeholder="Type message">
+  <button onclick="send()">Send</button>
+
+  <script>
+    const socket = io();
+    const room = "{{ room }}";
+    socket.emit('join', {room: room});
+    
+    socket.on('message', (data) => {
+      document.getElementById('messages').innerHTML += `<p><b>${data.user}:</b> ${data.msg}</p>`;
+    });
+    
+    function send() {
+      let msg = document.getElementById('msg').value;
+      socket.emit('message', {room: room, msg: msg, user: 'User'});
+      document.getElementById('msg').value = '';
+    }
+  </script>
+</body>
+</html>
