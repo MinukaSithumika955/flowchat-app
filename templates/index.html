@@ -7,7 +7,8 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: url('/static/background.jpg') no-repeat center fixed; /* <-- oyage image eka */
+      background-size: cover;
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -15,18 +16,19 @@
       color: white;
     }
     .container {
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.5); /* tikak dark karala text penna */
+      backdrop-filter: blur(15px);
       padding: 40px;
       border-radius: 20px;
       text-align: center;
       width: 90%;
       max-width: 400px;
-      box-shadow: 0 8px 32px rgba(0,0,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.2);
     }
     .logo { font-size: 50px; margin-bottom: 10px; }
-    h1 { font-size: 28px; margin-bottom: 8px; }
-    p { opacity: 0.8; margin-bottom: 30px; }
+    h1 { font-size: 28px; margin-bottom: 8px; text-shadow: 0 0 10px rgba(0,200,255,0.7); } /* glow effect */
+    p { opacity: 0.9; margin-bottom: 30px; }
     .input-group { display: flex; gap: 10px; }
     input {
       flex: 1;
@@ -38,7 +40,7 @@
     }
     button {
       padding: 15px 25px;
-      background: #4CAF50;
+      background: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); /* purple-blue gradient */
       color: white;
       border: none;
       border-radius: 12px;
@@ -47,16 +49,16 @@
       cursor: pointer;
       transition: 0.3s;
     }
-    button:hover { background: #45a049; transform: scale(1.05); }
+    button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(252,0,255,0.5); }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="logo">🔥</div>
+    <div class="logo">🚀</div>
     <h1>FlowChat</h1>
     <p>Room ekata name ekak danna</p>
     <div class="input-group">
-      <input id="room" placeholder="Ex: friends-room">
+      <input id="room" placeholder="Ex: galaxy-room">
       <button onclick="join()">Join</button>
     </div>
   </div>
