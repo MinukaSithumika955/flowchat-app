@@ -1,0 +1,22 @@
+<!doctype html><html><head><title>Profile</title>
+<style>
+body{background:#36393f;color:white;display:flex;justify-content:center;align-items:center;height:100vh;font-family:Whitney}
+.container{background:#2f3136;padding:30px;border-radius:10px;width:400px}
+img{width:100px;height:100px;border-radius:50%;object-fit:cover;margin:10px auto;display:block;border:3px solid #5865F2}
+input,button{width:100%;padding:12px;margin:10px 0;border:none;border-radius:5px;background:#40444b;color:white}
+button{background:#5865F2;font-weight:bold;cursor:pointer}
+.status-dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:5px}
+.online{background:#3ba55d}.offline{background:#747f8d}
+</style></head><body>
+<div class="container">
+<h2>Edit Profile</h2>
+<img src="{{ url_for('static', filename='uploads/' + user.profile_pic) }}" alt="pfp">
+<p><span class="status-dot {{ user.status }}"></span>{{ user.status }} | Last seen: {{ user.last_seen.strftime('%H:%M') }}</p>
+<form method="POST" enctype="multipart/form-data">
+<input name="username" value="{{ user.username }}" required>
+<label>Change Profile Pic:</label>
+<input type="file" name="profile_pic" accept="image/*">
+<button>Save Changes</button>
+</form>
+<a href="/dashboard">Back</a>
+</div></body></html>
