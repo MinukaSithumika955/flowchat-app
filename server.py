@@ -18,8 +18,11 @@ login_manager.login_view = 'login'
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(200), nullable=False)
-
+    profile_pic = db.Column(db.String(200), default='default.png') # aluth
+    status = db.Column(db.String(20), default='offline') # aluth: online, offline
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow) # aluth
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
